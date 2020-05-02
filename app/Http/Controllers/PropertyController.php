@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Property;
 use App\User;
+use App\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use phpDocumentor\Reflection\Types\Null_;
@@ -17,7 +18,15 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties= Property::all();
+        $user= auth()->user()->id;
+        $usuario = User::find($user);
+        $role = $usuario->hasRole("admin");
+        if ($role){
+            $properties= Property::all();
+        } else {
+            $properties = Property::all()->where('user_id',$user);
+        }
+
         return view('properties.index',compact('properties'));
     }
 

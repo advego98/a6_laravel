@@ -8,6 +8,9 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+    protected $fillable=['name','email','password'];
+
     public function properties(){
         return $this->hasMany('App\Property');
     }
@@ -48,4 +51,6 @@ class User extends Authenticatable
         }
         return false;
     }
+
+
 }
